@@ -21,3 +21,6 @@ class Vehicle:
     @functional.setter
     def functional(self, functional: bool):
         self._functional = bool(functional)
+
+    def move(self, distance: int):
+        pass
