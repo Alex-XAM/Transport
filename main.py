@@ -17,9 +17,11 @@ fleet = Fleet()
 for vehicle in vehicles:
     fleet.add_vehicle(vehicle)
 
-for i in range(10):
-    print('\nВсю технику отправляем в поездку на 20.000 км\n')
-    fleet.move_all(20000)
-    for vehicle in vehicles:
-        print(vehicle)
-    print('--------------------')
+dist = 100000
+print(f'\nВсю технику отправляем в поездку на {dist} км\n')
+# Добьемся того, чтобы весь парк техники проехал весь путь.
+# Пусть Fleet обеспечивает движение и починку - это его ответственность.
+fleet.move_all(dist)
+for vehicle in vehicles:
+    print(vehicle)
+print('--------------------')
