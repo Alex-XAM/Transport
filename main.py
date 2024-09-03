@@ -5,6 +5,7 @@ from Vehicles.Watercrafts.SpeedBoat import SpeedBoat
 from Vehicles.Watercrafts.CruiseShip import CruiseShip
 from Fleet import Fleet
 
+
 pc = PetrolCar()
 ec = ElectroCar()
 heli = Helicopter()
@@ -23,5 +24,5 @@ print(f'\nВсю технику отправляем в поездку на {dis
 # Пусть Fleet обеспечивает движение и починку - это его ответственность.
 fleet.move_all(dist)
 for vehicle in vehicles:
-    print(vehicle)
+    print(f'{vehicle} - остаток ресурса до следующего ремонта {vehicle.tbf_percent:.2f}%')
 print('--------------------')

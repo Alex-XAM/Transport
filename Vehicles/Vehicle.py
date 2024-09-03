@@ -1,3 +1,7 @@
+from math import ceil
+from random import randint
+
+
 class Vehicle:
     def __init__(self):
         self._fuel = 'не определено'
@@ -21,7 +25,15 @@ class Vehicle:
 
     def __str__(self):
         f = ('' if self._functional else 'не') + 'исправен'
-        return f'{self._name} [{self._fuel}, {f}]'
+        return f'{self._name} [{self._fuel}, {f}'
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def tbf_percent(self):
+        return self._tbf_percent
 
     @property
     def fuel(self):
@@ -30,6 +42,16 @@ class Vehicle:
     @property
     def functional(self):
         return self._functional
+
+    @property
+    def mtbf(self):
+        return self._mtbf
+
+    @mtbf.setter
+    def mtbf(self, mtbf):
+        p = 10  # Разбег в пробеге 10%
+        percent = ceil(self.mtbf / 100 * p)
+        self._mtbf = randint(self.mtbf - percent, self.mtbf + percent)  # self.mtbf +- 10%
 
     @functional.setter
     def functional(self, functional: bool):

@@ -7,4 +7,4 @@ class CruiseShip(Watercraft):
         self._fuel = 'дизельное топливо'
         self._distance_reserve = 10000
         self._name = 'круизный лайнер'
-        self._speed = 40  # средняя скорость
+        self._speed = 40  # [км/ч] средняя скорость

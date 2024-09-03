@@ -7,4 +7,4 @@ class SpeedBoat(Watercraft):
         self._fuel = 'бензин'
         self._distance_reserve = 500
         self._name = 'катер'
-        self._speed = 60  # средняя скорость
+        self._speed = 60  # [км/ч] средняя скорость

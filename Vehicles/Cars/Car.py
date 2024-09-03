@@ -1,4 +1,4 @@
-from random import choice, randint
+from math import ceil
 from ..Vehicle import Vehicle
 
 
@@ -6,9 +6,8 @@ class Car(Vehicle):
     def __init__(self):
         super().__init__()
         self._trip_counter = 0
-        self._speed = 90 # средняя скорость
-        # Это вместо ODOMETER_CRITICAL. Поле в классе более гибко, чем константа, т.к. оно наследуется.
-        self._mtbf = 40000  # [км]
+        self._speed = 90 # [км/ч] средняя скорость
+        self._mtbf = 40000  # [км] пробег, после которого ТС ломается
 
     def __str__(self):
         return super().__str__() + f' {self._trip_counter} км пробега]'
@@ -21,7 +20,15 @@ class Car(Vehicle):
     def trip_counter(self):
         return self._trip_counter
 
-    def move(self, distance: int):
-        if self._trip_counter > self._mtbf:
-            self.functional = choice([True, False, True])
-        self._trip_counter += distance if self.functional else randint(0, distance)
+    def move(self, distance: int) -> int:
+        self.mtbf = self.mtbf
+        tbf = ceil(self.mtbf * self._tbf_percent / 100)  # Оставшийся ресурс ТС до поломки
+        if distance >= tbf:
+            self._trip_counter += tbf
+            self.functional = False
+            self._tbf_percent = 0
+            return tbf
+        else:
+            self._trip_counter += distance
+            self._tbf_percent -= distance / self.mtbf * 100
+            return distance
