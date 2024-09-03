@@ -22,5 +22,4 @@ class Fleet:
 
     def repair_vehicle(self, vehicle: Vehicle):
         vehicle.functional = True
-        vehicle._tbf_percent = 100
         print(f'{vehicle.name} отремонтирован')
