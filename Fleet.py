@@ -13,7 +13,7 @@ class Fleet:
             print(f'{vehicle.name} начал движение на дистанцию {distance} км')
             rest_of_distance = distance
             while rest_of_distance:
-                rest_of_distance -= vehicle.move(rest_of_distance)
+                rest_of_distance -= vehicle.move(rest_of_distance, vehicle.type_vehicle)
                 print(f'{vehicle.name} достиг отметки {distance - rest_of_distance} км')
                 if not vehicle.functional:
                     print(f'{vehicle.name} неисправен')
