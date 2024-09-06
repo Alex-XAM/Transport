@@ -77,7 +77,7 @@ class Vehicle:
             self._tbf_percent = 100
             self.mtbf_after_repair = self.mtbf
 
-    def move(self, distance: int, type_vehicle: str) -> int:
+    def move(self, distance: int) -> int:
         """Движение на заданное расстояние.
         Args:
             distance: запрошенное расстояние, которое нужно пройти.
@@ -85,7 +85,7 @@ class Vehicle:
             Реально пройденное расстояние. Оно может быть меньше, чем запрошенное, если машина сломалась в пути
         """
         tbf = ceil(self.mtbf_after_repair * self.tbf_percent / 100)  # [км] или [моточасы] Оставшийся ресурс ТС до поломки
-        if type_vehicle == 'наземный':
+        if self.type_vehicle == 'наземный':
             if distance >= tbf:
                 self._trip_counter += tbf
                 self.functional = False
