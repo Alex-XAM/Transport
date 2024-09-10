@@ -10,9 +10,7 @@ class Helicopter(Vehicle):
         self._speed = 200 # [км/ч] средняя скорость для пересчёта
         self._name = 'вертолёт'
         self._mtbf = 1000  # [моточасы] двигателя, после которого летательный аппарат ломается
-        # mtbf_after_repair - значение MTBF после ремонта ТС
-        # Первое значение будет искомое значение MTBF, а далее значение уменьшится
-        self._mtbf_after_repair = self.mtbf
+        self._unit = 'ч'
 
     def __str__(self):
         return super().__str__() + f' {self._hour_counter} часов полёта]'

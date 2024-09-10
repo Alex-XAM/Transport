@@ -1,5 +1,3 @@
-from typing import Callable
-
 class Resource:
     """Класс хранит остаток межремонтного ресурса транспортного средства"""
     def __init__(self, mtbf: int, unit: str):
@@ -13,6 +11,7 @@ class Resource:
         self._tbf_percent = 100.0
         # Количество ремонтов. Используется для того, чтобы межремонтный пробег уменьшался с каждым ремонтом.
         self._repairs = 0
+        self._functional = True
 
     def __str__(self):
         return f'Остаток ресурса {self.units_left} {self._unit}'
@@ -24,8 +23,12 @@ class Resource:
 
     @property
     def functional(self) -> bool:
-        # TBD!
-        pass
+        return self._functional
+
+    @functional.setter
+    def functional(self, functional: bool):
+        """Установка состояния исправной или поломанной машины и связанных с этим значений"""
+        self._functional = bool(functional)
 
     def spend(self, x: float) -> float:
         """Тратит x единиц ресурса. Возвращает реально потраченное количество."""
@@ -36,6 +39,7 @@ class Resource:
         else:
             actually_spent = self._tbf_percent * self._mtbf / 100.0
             self._tbf_percent = 0.0
+            self.functional = False
         assert self._tbf_percent >= 0.0, 'Процент TBF не может быть отрицательным'
         assert actually_spent <= x, 'Потрачено больше, чем требовалось'
         return actually_spent

@@ -15,6 +15,10 @@ class Fleet:
             while rest_of_distance:
                 rest_of_distance -= vehicle.move(rest_of_distance)
                 print(f'{vehicle.name} достиг отметки {distance - rest_of_distance} км')
+                if vehicle.type_vehicle == 'наземный':
+                    print(f'пробег {vehicle.trip_counter} {vehicle.unit}')
+                else:
+                    print(f'наработка {vehicle.hour_counter} {vehicle.unit}')
                 if not vehicle.functional:
                     print(f'{vehicle.name} неисправен')
                     self.repair_vehicle(vehicle)
@@ -23,3 +27,4 @@ class Fleet:
     def repair_vehicle(self, vehicle: Vehicle):
         vehicle.functional = True
         print(f'{vehicle.name} отремонтирован')
+        vehicle.fix()
