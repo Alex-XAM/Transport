@@ -6,7 +6,9 @@ class Watercraft(Vehicle):
         super().__init__()
         self._type_vehicle = 'водный'
         self._mtbf = 1000  # [моточасы] двигателя, после которого лодка ломается
-        self._unit = 'ч'
+        # mtbf_after_repair - значение MTBF после ремонта ТС
+        # Первое значение будет искомое значение MTBF, а далее значение уменьшится
+        self._mtbf_after_repair = self.mtbf
 
     def __str__(self):
         return super().__str__() + f' {self._hour_counter} часов следования]'

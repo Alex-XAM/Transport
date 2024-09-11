@@ -20,8 +20,9 @@ for vehicle in vehicles:
 
 dist = 100000
 print(f'\nВсю технику отправляем в поездку на {dist} км\n')
-
+# Добьемся того, чтобы весь парк техники проехал весь путь.
+# Пусть Fleet обеспечивает движение и починку - это его ответственность.
 fleet.move_all(dist)
 for vehicle in vehicles:
-    print(f'{vehicle} - остаток ресурса до следующего ремонта {vehicle.tbf_percent:.1f}%')
-print('-' * 100)
+    print(f'{vehicle} - остаток ресурса до следующего ремонта {vehicle.tbf_percent:.2f}%')
+print('--------------------')
