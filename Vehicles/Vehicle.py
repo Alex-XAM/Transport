@@ -1,5 +1,6 @@
 from math import ceil
 from random import randint
+from Resource import Resource
 
 
 class Vehicle:
@@ -11,26 +12,15 @@ class Vehicle:
         self._type_vehicle = 'не определено'
         self._trip_counter = 0  # [км] счётчик пробега
         self._hour_counter = 0  # [моточасы] счётчик пробега
-        # Выносим функционал описания поломок в базовый класс. Используем два параметра.
-        # 1. MTBF (Mean time between failures) - средняя наработка на отказ.
-        # В данном случае это сколько в среднем механизм отработает до поломки. Единицы измерения -
-        # те, которые применимы для конкретного класса (км, часы и т.п.). Значения установить в
-        # конструкторах конкретных классов.
-        self._mtbf = 0
-        # 2. Оставшийся процент TBF, то есть сколько процентов от номинального значения MTBF осталось до поломки.
-        # Когда это значение упадет до нуля, машина ломается. Это работает одинаково для всех классов.
-        # Пробег до поломки будет равен произведению этих двух величин. Например,
-        #  self._mtbf == 40000 и self._tbf_percent == 10, тогда машина сломается через 4000 пробега.
-        self._tbf_percent = 100
-        self._functional = True
-        # И вызовем "починку" машины, чтобы правильно инициализировать параметры, связанные с поломками
-        # self.functional = True
-        # mtbf_after_repair - значение MTBF после ремонта ТС
-        # Первое значение будет искомое значение MTBF, а далее значение уменьшится
-        self._mtbf_after_repair = 0
+        # Все, что было связано с обработкой ресурса и поломок, из этого класса убираем. Взамен будет экземпляр
+        # класса Resource. Будем им пользоваться для всей работы с поломками. Но здесь (в классе Vehicle) экземпляр
+        # Resource не создаём потому, что только классы-потомки знают, с какими параметрами надо создавать
+        # экземпляр Resource. Вместо экземпляра Resource написано None. Не очень красиво, но пока так,
+        # потом сделаем лучше.
+        self._resource = None  # Классы-потомки пропишут в это поле экземпляр Resource
 
     def __str__(self):
-        f = ('' if self._functional else 'не') + 'исправен'
+        f = ('' if self._resource.functional else 'не') + 'исправен'
         return f'{self._name} [{self._fuel}, {f}'
 
     @property
@@ -42,40 +32,17 @@ class Vehicle:
         return self._type_vehicle
 
     @property
-    def mtbf_after_repair(self):
-        return self._mtbf_after_repair
-
-    @property
-    def tbf_percent(self):
-        return self._tbf_percent
-
-    @property
     def fuel(self):
         return self._fuel
 
     @property
     def functional(self):
-        return self._functional
+        # Обертка вокруг functional из счетчика ресурса
+        return self._resource.functional
 
-    @property
-    def mtbf(self):
-        return self._mtbf
-
-    @mtbf_after_repair.setter
-    def mtbf_after_repair(self, mtbf):
-        """Значение mtbf_after_repair после ремонта будет от 77 до 99% значения MTBF"""
-        percents = (77, 99)
-        percent1, percent2 = [ceil(mtbf / 100 * p) for p in percents]
-        self._mtbf_after_repair = randint(percent1, percent2)
-
-    @functional.setter
-    def functional(self, functional: bool):
-        """Установка состояния исправной или поломанной машины и связанных с этим значений"""
-        self._functional = bool(functional)
-        # Если машину починили, то TBF поднимаем до полного значения
-        if self._functional:
-            self._tbf_percent = 100
-            self.mtbf_after_repair = self.mtbf
+    def fix(self):
+        # Обертка вокруг fix() из счетчика ресурса
+        self._resource.fix()
 
     def move(self, distance: int) -> int:
         """Движение на заданное расстояние.

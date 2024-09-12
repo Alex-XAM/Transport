@@ -21,5 +21,5 @@ class Fleet:
             print()
 
     def repair_vehicle(self, vehicle: Vehicle):
-        vehicle.functional = True
+        vehicle.fix()
         print(f'{vehicle.name} отремонтирован')

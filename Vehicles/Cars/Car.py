@@ -1,13 +1,13 @@
 from ..Vehicle import Vehicle
-
+from Resource import Resource
 
 class Car(Vehicle):
     def __init__(self):
         super().__init__()
         self._type_vehicle = 'наземный'
         self._speed = 90 # [км/ч] средняя скорость
-        self._mtbf = 40000  # [км] пробег, после которого ТС ломается
-        self._mtbf_after_repair = self.mtbf
+        # Создаем счетчик ресурса с конкретными параметрами, он заменяет None, унаследованное из Vehicle
+        self._resource = Resource(40000, 'км')
 
     def __str__(self):
         return super().__str__() + f' {self._trip_counter} км пробега]'
