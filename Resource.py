@@ -25,7 +25,8 @@ class Resource:
 
     @property
     def functional(self) -> bool:
-        return bool(self._tbf_percent)
+        # Исправен, если процент ресурса больше нуля (0.0). Сравниваем с учетом погрешности, свойственной типу float
+        return self._tbf_percent > 0.000001
 
     def spend(self, x: float) -> float:
         """Тратит x единиц ресурса. Возвращает реально потраченное количество."""
