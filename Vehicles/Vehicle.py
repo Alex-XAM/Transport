@@ -1,6 +1,4 @@
 from math import ceil
-from random import randint
-from Resource import Resource
 
 
 class Vehicle:
@@ -28,6 +26,10 @@ class Vehicle:
         return self._name
 
     @property
+    def resource(self):
+        return self._resource
+
+    @property
     def type_vehicle(self):
         return self._type_vehicle
 
@@ -44,32 +46,19 @@ class Vehicle:
         # Обертка вокруг fix() из счетчика ресурса
         self._resource.fix()
 
-    def move(self, distance: int) -> int:
+    def move(self, distance: float) -> float:
         """Движение на заданное расстояние.
         Args:
             distance: запрошенное расстояние, которое нужно пройти.
         Returns:
             Реально пройденное расстояние. Оно может быть меньше, чем запрошенное, если машина сломалась в пути
         """
-        tbf = ceil(self.mtbf_after_repair * self.tbf_percent / 100)  # [км] или [моточасы] Оставшийся ресурс ТС до поломки
+
         if self.type_vehicle == 'наземный':
-            if distance >= tbf:
-                self._trip_counter += tbf
-                self.functional = False
-                self._tbf_percent = 0
-                return tbf
-            else:
-                self._trip_counter += distance
-                self._tbf_percent -= distance / self.mtbf_after_repair * 100
-                return distance
+            actually_distance = self._resource.spend(distance)
+            self._trip_counter += ceil(actually_distance)
+            return actually_distance
         else:
-            hour = ceil(distance / self._speed)  # Количество часов необходимых для прохождения дистанции
-            if hour >= tbf:
-                self._hour_counter += tbf
-                self.functional = False
-                self._tbf_percent = 0
-                return tbf * self._speed
-            else:
-                self._hour_counter += hour
-                self._tbf_percent -= hour / self.mtbf_after_repair * 100
-                return distance
+            actually_hour = self._resource.spend(distance / self._speed)
+            self._hour_counter += ceil(actually_hour)
+            return actually_hour * self._speed

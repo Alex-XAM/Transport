@@ -1,4 +1,5 @@
 from ..Vehicle import Vehicle
+from Resource import Resource
 
 
 class Helicopter(Vehicle):
@@ -9,10 +10,8 @@ class Helicopter(Vehicle):
         self._distance_reserve = 1200
         self._speed = 200 # [км/ч] средняя скорость для пересчёта
         self._name = 'вертолёт'
-        self._mtbf = 1000  # [моточасы] двигателя, после которого летательный аппарат ломается
-        # mtbf_after_repair - значение MTBF после ремонта ТС
-        # Первое значение будет искомое значение MTBF, а далее значение уменьшится
-        self._mtbf_after_repair = self.mtbf
+        # Создаем счетчик ресурса с конкретными параметрами, он заменяет None, унаследованное из Vehicle
+        self._resource = Resource(1000, 'ч')  # 1000 ч - ресурс двигателя вертолёта
 
     def __str__(self):
         return super().__str__() + f' {self._hour_counter} часов полёта]'

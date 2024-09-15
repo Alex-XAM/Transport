@@ -1,3 +1,4 @@
+from math import ceil
 from typing import Callable
 
 class Resource:
@@ -15,7 +16,7 @@ class Resource:
         self._repairs = 0
 
     def __str__(self):
-        return f'Остаток ресурса {self.units_left} {self._unit}'
+        return f'Остаток ресурса {ceil(self.units_left)} {self._unit}'
 
     @property
     def units_left(self) -> float:
@@ -24,8 +25,7 @@ class Resource:
 
     @property
     def functional(self) -> bool:
-        # TBD!
-        pass
+        return bool(self._tbf_percent)
 
     def spend(self, x: float) -> float:
         """Тратит x единиц ресурса. Возвращает реально потраченное количество."""

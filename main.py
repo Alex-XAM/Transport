@@ -23,6 +23,7 @@ print(f'\nВсю технику отправляем в поездку на {dis
 # Добьемся того, чтобы весь парк техники проехал весь путь.
 # Пусть Fleet обеспечивает движение и починку - это его ответственность.
 fleet.move_all(dist)
+print('-' * 50)
 for vehicle in vehicles:
-    print(f'{vehicle} - остаток ресурса до следующего ремонта {vehicle.tbf_percent:.2f}%')
-print('--------------------')
+    print(f'{vehicle} - {vehicle.resource}')
+print('-' * 50)
