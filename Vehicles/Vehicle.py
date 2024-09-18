@@ -1,7 +1,8 @@
+from abc import ABC, abstractmethod
 from math import ceil
 
 
-class Vehicle:
+class Vehicle(ABC):
     def __init__(self):
         self._fuel = 'не определено'
         self._distance_reserve = 0
@@ -10,24 +11,19 @@ class Vehicle:
         self._type_vehicle = 'не определено'
         self._trip_counter = 0  # [км] счётчик пробега
         self._hour_counter = 0  # [моточасы] счётчик пробега
-        # Все, что было связано с обработкой ресурса и поломок, из этого класса убираем. Взамен будет экземпляр
-        # класса Resource. Будем им пользоваться для всей работы с поломками. Но здесь (в классе Vehicle) экземпляр
-        # Resource не создаём потому, что только классы-потомки знают, с какими параметрами надо создавать
-        # экземпляр Resource. Вместо экземпляра Resource написано None. Не очень красиво, но пока так,
-        # потом сделаем лучше.
-        self._resource = None  # Классы-потомки пропишут в это поле экземпляр Resource
 
     def __str__(self):
-        f = ('' if self._resource.functional else 'не') + 'исправен'
+        f = ('' if self.resource.functional else 'не') + 'исправен'
         return f'{self._name} [{self._fuel}, {f}'
+
+    @property
+    @abstractmethod
+    def resource(self):
+        pass
 
     @property
     def name(self):
         return self._name
-
-    @property
-    def resource(self):
-        return self._resource
 
     @property
     def type_vehicle(self):
@@ -40,11 +36,11 @@ class Vehicle:
     @property
     def functional(self):
         # Обертка вокруг functional из счетчика ресурса
-        return self._resource.functional
+        return self.resource.functional
 
     def fix(self):
         # Обертка вокруг fix() из счетчика ресурса
-        self._resource.fix()
+        self.resource.fix()
 
     def move(self, distance: float) -> float:
         """Движение на заданное расстояние.
@@ -55,10 +51,10 @@ class Vehicle:
         """
 
         if self.type_vehicle == 'наземный':
-            actually_distance = self._resource.spend(distance)
+            actually_distance = self.resource.spend(distance)
             self._trip_counter += ceil(actually_distance)
             return actually_distance
         else:
-            actually_hour = self._resource.spend(distance / self._speed)
+            actually_hour = self.resource.spend(distance / self._speed)
             self._hour_counter += ceil(actually_hour)
             return actually_hour * self._speed

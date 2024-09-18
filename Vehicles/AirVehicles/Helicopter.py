@@ -10,11 +10,14 @@ class Helicopter(Vehicle):
         self._distance_reserve = 1200
         self._speed = 200 # [км/ч] средняя скорость для пересчёта
         self._name = 'вертолёт'
-        # Создаем счетчик ресурса с конкретными параметрами, он заменяет None, унаследованное из Vehicle
         self._resource = Resource(1000, 'ч')  # 1000 ч - ресурс двигателя вертолёта
 
     def __str__(self):
         return super().__str__() + f' {self._hour_counter} часов полёта]'
+
+    @property
+    def resource(self):
+        return self._resource
 
     @property
     def operating_hours(self):
