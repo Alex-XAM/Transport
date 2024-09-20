@@ -20,6 +20,7 @@ class Fleet:
                     self.repair_vehicle(vehicle)
             print()
 
-    def repair_vehicle(self, vehicle: Vehicle):
+    @staticmethod
+    def repair_vehicle(vehicle: Vehicle):
         vehicle.fix()
         print(f'{vehicle.name} отремонтирован')
