@@ -1,11 +1,11 @@
 from ..Vehicle import Vehicle
 from Resource import Resource
+from ..MotoHoursVehicle import MotoHoursVehicle
 
 
-class Helicopter(Vehicle):
+class Helicopter(MotoHoursVehicle, Vehicle):
     def __init__(self):
         super().__init__()
-        self._type_vehicle = 'воздушный'
         self._fuel = 'бензин'
         self._distance_reserve = 1200
         self._speed = 200 # [км/ч] средняя скорость для пересчёта

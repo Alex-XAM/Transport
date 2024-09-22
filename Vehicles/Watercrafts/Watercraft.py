@@ -1,11 +1,11 @@
 from ..Vehicle import Vehicle
 from Resource import Resource
+from ..MotoHoursVehicle import MotoHoursVehicle
 
 
-class Watercraft(Vehicle):
+class Watercraft(MotoHoursVehicle, Vehicle):
     def __init__(self):
         super().__init__()
-        self._type_vehicle = 'водный'
         self._resource = Resource(1000, 'ч')  # 1000 ч - ресурс двигателя водного транспорта
 
     def __str__(self):

@@ -20,8 +20,6 @@ for vehicle in vehicles:
 
 dist = 100000
 print(f'\nВсю технику отправляем в поездку на {dist} км\n')
-# Добьемся того, чтобы весь парк техники проехал весь путь.
-# Пусть Fleet обеспечивает движение и починку - это его ответственность.
 fleet.move_all(dist)
 print('-' * 50)
 for vehicle in vehicles:
