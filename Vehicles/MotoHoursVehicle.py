@@ -1,16 +1,11 @@
+from .Vehicle import Vehicle
 from math import ceil
 
 
-class MotoHoursVehicle:
+class MotoHoursVehicle(Vehicle):
     def __init__(self):
         super().__init__()
         self._hour_counter = 0  # [моточасы] счётчик пробега
-        self._speed = 0 # средняя скорость
-        self._resource = None  # Потомки определят ресурс двигателя (водного или воздушного транспорта)
-
-    @property
-    def resource(self):
-        return self._resource
 
     def move(self, distance: float) -> float:
         """Движение на заданное расстояние.

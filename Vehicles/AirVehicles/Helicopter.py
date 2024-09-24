@@ -1,9 +1,8 @@
-from ..Vehicle import Vehicle
 from Resource import Resource
 from ..MotoHoursVehicle import MotoHoursVehicle
 
 
-class Helicopter(MotoHoursVehicle, Vehicle):
+class Helicopter(MotoHoursVehicle):
     def __init__(self):
         super().__init__()
         self._fuel = 'бензин'
